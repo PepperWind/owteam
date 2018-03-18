@@ -8,6 +8,7 @@ var users = lobbies =  {};
 
 var externalRoutes = require('./js/routes')(app);
 var communicator = require('./js/communicator')(app, io, users, lobbies);
+var auth = require('./js/auth')(users);
 
 app.use(express.static(__dirname + '/node_modules'))
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutDir: __dirname + 'views/layouts/'}));

@@ -1,25 +1,38 @@
 <div class="container">
   <div class="block">
-    <h1 class="title is-1">{{ title }}</h1>
+    <h1 class="title is-1">{{ lobbyName }}</h1>
   </div>
 
-  <div class="block" id="lobbies">
+  <div class="block" id="lobby">
     <table class="table is-bordered is-hoverable">
       <thead>
         <tr>
           <th>Name</th>
-          <th>Players</th>
+          <th>Selected hero</th>
+          <th>Played heroes</th>
           <th>Rank</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="lobby in lobbies" @click="join(lobby)">
-          <td>${lobby.name}</td>
-          <td>${lobby.players}/6</td>
-          <td>${lobby.rank}</td>
+        <tr v-for="member in members">
+          <td>${member.name}</td>
+          <td>${member.selected}</td>
+          <td>${member.heroes}</td>
+          <td>${member.rank}</td>
         </tr>
       </tbody>
     </table>
+
+
+    <div v-for="hero in heroes">
+      <input type="checkbox" :id=hero :value=hero v-model="wantedHeroes">
+      <label :for=hero>${hero}</label>
+    </div>
+
+    <button class="button is-primary" @click="selectAll">Check all not taken</button>
+    <button class="button is-info" @click="selectAll">Check all</button>
+    <button class="button" @click="deselectAll">Uncheck all</button>
+
   </div>
 </div>
 
@@ -31,31 +44,43 @@
 
   new Vue({
     delimiters: ['${', '}'],
-    el:'#lobbies',
+    el:'#lobby',
 
     data: {
-      lobbies: [{id:420, name: "myname", players: "mesplayers", rank: "monRank"}]
+      members: [{name: "Karl", playedHeroes: ["D.Va", "Mercy", "Tracer"], selectedHero: "Mercy"}],
+      heroes: ["Ana", "Bastion", "Brigitte", "D.Va", "Doomfist", "Genji", "Hanzo", "Junkrat", "Lúcio", "McCree", "Mei", "Mercy", "Moira", "Pharah", "Roadhog", "Soldier 76", "Sombra", "Torbjörn", "Tracer", "Widowmaker", "Winston", "Zenyatta"],
+      wantedHeroes: [],
+      selectedHero: ""
     },
 
-    methods: {
-      join: function(lobby) {
-        alert("On va rejoindre le salon "+lobby.name+".")
-      }
-    },
-
-    /*mounted: function() {
-      socket.on('connect', function() {
-        socket.emit('join', [channel, userId, userName]);
-        console.log('Connected to server.');
+    mounted: function() {
+      var socket = io.connect('http://127.0.0.1:8080');
+      socket.on('connect', function(data) {
+        console.log("Connected to the server");
       });
 
-      socket.on('chat.'+channel, function(payload) {
+      socket.on('connect', function(payload) {
+        socket.emit('getLobbyPlayers', {{lobbyName}});
+      });
+
+      socket.on('getLobbyPlayers', function(payload) {
+        members = payload;
+      });
+
+      /*socket.on('chat.'+channel, function(payload) {
         this.messages.push([channel, payload[1], payload[2]]);
-      }.bind(this));
+      }.bind(this));*/
     },
 
     methods: {
-      send: function(e) {
+      selectAll: function() {
+        this.wantedHeroes = this.heroes;
+      },
+      deselectAll: function() {
+        this.wantedHeroes = [];
+      },
+
+      /*send: function(e) {
         e.preventDefault();
 
         var payload = [channel, userId, this.message];
@@ -66,7 +91,7 @@
           socket.emit('chat', payload);
 
         this.message = null;
-      }
-    }*/
+      }*/
+    }
   })
 </script>
