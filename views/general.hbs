@@ -64,21 +64,8 @@
 
     methods: {
       join: function(lobby) {
-        {{#if userName and userrank and playedHeroes}}
-          {{#if userRank}}
-            {{#if playedHeroes}}
-                alert('Lopesse');
-                try{
-                  window.location = "/lobby?lobbyid="+lobby.id+"&userName="+{{userName}}+"&userRank="+{{userRank}}+"&playedHeroes="+{{playedHeroes}};
-                } catch(error) {
-                  console.error(error);
-                  window.location="/";
-                }
-              {{/ if}}
-          {{/ if}}
-        {{/ if}}
 
-              }
+      }
     },
 
   })

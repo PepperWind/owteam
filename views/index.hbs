@@ -5,17 +5,18 @@
 
   <div class="block" id="login">
     <div class="field">
-      <form method="get" action="general">
+      <form method="post" action="general">
         <label class="label">Your BattleTag</label>
-        <input class="input" placeholder="BattleTag#4242" type="text">
+        <input required class="input" placeholder="BattleTag#4242" type="text" name="userName">
         <label class="label">Your rank</label>
-        <input class="input" type="number">
+        <input required class="input" type="number" name="userRank">
 
+        <input type="hidden" id="playedHeroes" name="playedHeroes">
         <div v-for="hero in heroes">
           <input type="checkbox" :id=hero :value=hero v-model="checkedHeroes">
           <label :for=hero>${hero}</label>
         </div>
-        <input class="button is-primary" type="submit" id="submit" value="Submit">
+        <input class="button is-primary" type="submit" id="submit" value="Submit" @click="validate">
       </form>
     </div>
   </div>
@@ -33,7 +34,18 @@
 
     data: {
       heroes: ["Ana", "Bastion", "Brigitte", "D.Va", "Doomfist", "Genji", "Hanzo", "Junkrat", "Lúcio", "McCree", "Mei", "Mercy", "Moira", "Pharah", "Roadhog", "Soldier 76", "Sombra", "Torbjörn", "Tracer", "Widowmaker", "Winston", "Zenyatta"],
-      checkedHeroes: []
+      checkedHeroes: [],
+      formattedSelectedHeroes: ""
     },
-  })
+
+    methods: {
+      validate: function(e){
+        if(this.checkedHeroes.length == 0) {
+          e.preventDefault();
+        }
+        else
+          document.getElementById("playedHeroes").value = this.checkedHeroes.join(',');
+      },
+    }
+  });
 </script>

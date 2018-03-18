@@ -1,5 +1,5 @@
-module.exports = function() {
-  function makeId(users) {
+module.exports = {
+  makeId: function (users) {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
