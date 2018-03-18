@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="block">
+    <h1 class="title is-1">{{ title }}</h1>
+  </div>
+
+  <div class="block" id="login">
+    <div class="field">
+      <form method="get" action="general">
+        <label class="label">Your BattleTag</label>
+        <input class="input" placeholder="BattleTag#4242" type="text">
+        <label class="label">Your rank</label>
+        <input class="input" type="number">
+
+        <div v-for="hero in heroes">
+          <input type="checkbox" :id=hero :value=hero v-model="checkedHeroes">
+          <label :for=hero>${hero}</label>
+        </div>
+        <input class="button is-primary" type="submit" id="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*var socket = io.connect('http://127.0.0.1:8080');
+  socket.on('connect', function(data) {
+
+  });*/
+
+  new Vue({
+    delimiters: ['${', '}'],
+    el:'#login',
+
+    data: {
+      heroes: ["Ana", "Bastion", "Brigitte", "D.Va", "Doomfist", "Genji", "Hanzo", "Junkrat", "Lúcio", "McCree", "Mei", "Mercy", "Moira", "Pharah", "Roadhog", "Soldier 76", "Sombra", "Torbjörn", "Tracer", "Widowmaker", "Winston", "Zenyatta"],
+      checkedHeroes: []
+    },
+  })
+</script>

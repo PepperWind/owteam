@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="block">
+    <h1 class="title is-1">{{ title }}</h1>
+  </div>
+
+  <div class="block" id="lobbies">
+    <table class="table is-bordered is-hoverable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Players</th>
+          <th>Rank</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="lobby in lobbies" @click="join(lobby)">
+          <td>${lobby.name}</td>
+          <td>${lobby.players}/6</td>
+          <td>${lobby.rank}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  /*var socket = io.connect('http://127.0.0.1:8080');
+  socket.on('connect', function(data) {
+
+  });*/
+
+  new Vue({
+    delimiters: ['${', '}'],
+    el:'#lobbies',
+
+    data: {
+      lobbies: [{id:420, name: "myname", players: "mesplayers", rank: "monRank"}]
+    },
+
+    methods: {
+      join: function(lobby) {
+        alert("On va rejoindre le salon "+lobby.name+".")
+      }
+    },
+
+    /*mounted: function() {
+      socket.on('connect', function() {
+        socket.emit('join', [channel, userId, userName]);
+        console.log('Connected to server.');
+      });
+
+      socket.on('chat.'+channel, function(payload) {
+        this.messages.push([channel, payload[1], payload[2]]);
+      }.bind(this));
+    },
+
+    methods: {
+      send: function(e) {
+        e.preventDefault();
+
+        var payload = [channel, userId, this.message];
+        if(this.message == '')
+          this.message = null;
+
+        if(this.message !== null)
+          socket.emit('chat', payload);
+
+        this.message = null;
+      }
+    }*/
+  })
+</script>
