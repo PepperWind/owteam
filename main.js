@@ -15,7 +15,7 @@ var app = express();
 var server = require('http').createServer(app);
 
 app.use(session({
-  secret: "yPyL2j6hHCGKfUQ38plS3NiooCjsszD9a1kVGD4feFJMzUnb9sHt1EePrMPDKQNr",
+  secret: "This was and is a false secret :)",
   resave: false,
   saveUninitialized: true,
   cookie: {}
