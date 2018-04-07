@@ -36,13 +36,13 @@
   </div>
 
   <div class="block" id="create">
-    <form method="get" action="lobby">
+    <form method="post" action="lobby">
       <div class="field">
         <label class="label">Name</label>
-        <input :class="classe" placeholder="Enter Name" type="text" @keyup="checkLobbyExists" v-model="name">
+        <input id="lobbyNameField" :class="classe" placeholder="Enter Name" type="text" @keyup="checkLobbyExists" v-model="name" name="lobbyName">
       </div>
 
-      <input type="submit" class="button is-primary" value="Create">
+      <input id="lobbyConnectSubmit" type="submit" class="button is-primary" value="Create">
 
     </form>
   </div>
@@ -64,11 +64,22 @@
 
     methods: {
       join: function(lobby) {
-
+        document.getElementById("lobbyNameField").value = lobby.name;
+        document.getElementById("lobbyConnectSubmit").click();
       }
     },
 
+    socket.on('getLobbyList', function(payload) { // le serveur renvoie true si le nom existe déjà
+      this.lobbies = payload;
+    }.bind(this));
+
+
   })
+
+  //
+  // --------------------------------------------------------
+  //
+
   new Vue({
     delimiters: ['${', '}'],
     el:'#create',
@@ -106,7 +117,7 @@
         if(this.name !== null) {
           socket.emit('checkLobbyExists', payload);
         }
-      },
+      }
     }
   })
 

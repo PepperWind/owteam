@@ -1,0 +1,24 @@
+lobbies
+  - indices: noms des lobbies.
+    - lobbies[index].leader: identifiant du leader.
+    - lobbies[index].players: tableau des identifiants des joueurs (dont le leader).
+    - lobbies[index].players: identifiants des joueurs (dont le leader).
+    - lobbies[index].wantedHeroes
+
+users
+  - indices: identifiant du joueur.
+    - users[index].userName.
+    - users[index].userRank.
+    - users[index].playedHeroes.
+    - users[index].lobby: nom du lobby actuel (undefined sinon).
+
+client
+  - client.playerId: identifiant du joueur
+
+Connexion HTTP:
+  Connexion à l'arrivée post sur /general.
+  Déconnexion par timeout.
+  // TODO L'utilisateur doit signaler sa présence à intervalles réguliers, et le serveur doit pouvoir demander au joueur s'il est toujours là.
+
+Connexion SocketIO:
+  // TODO Maintenir une connexion SocketIO sur plusieurs pages.

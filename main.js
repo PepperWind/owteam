@@ -1,3 +1,12 @@
+
+/*
+Questions:
+
+  - gérer les déconnexions.
+  - faire des requetes post proprement.
+*/
+
+
 var express = require('express');
 var hbs = require('express-handlebars');
 var session = require('express-session');
@@ -15,14 +24,15 @@ app.use(session({
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 
 var io = require('socket.io')(server);
-var users = lobbies =  {};
+var users = {};
+var lobbies = {};
 
 var auth = require('./js/auth');
-var externalRoutes = require('./js/routes')(app, auth, users);
-var communicator = require('./js/communicator')(app, io, users, lobbies);
+var externalRoutes = require('./js/routes')(app, auth, users, lobbies);
+var communicator = require('./js/communicator')(app, io, users, lobbies, io);
 
 app.use(express.static(__dirname + '/node_modules'))
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutDir: __dirname + 'views/layouts/'}));
